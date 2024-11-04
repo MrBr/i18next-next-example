@@ -3,7 +3,9 @@ import Link from "next/link";
 import { withLang } from "@/lang-utils";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { Hidden } from "@/app/[lang]/_components/hidden";
+import dynamic from "next/dynamic";
+
+const DynamicHidden = dynamic(() => import('@/app/[lang]/_components/hidden').then(({Hidden}) => Hidden))
 
 export default function TradePage() {
   const {t} = useTranslation('trade')
@@ -14,7 +16,7 @@ export default function TradePage() {
       <h1>{t('title')}</h1>
       <Link href={withLang('/bots')}>{t('bots')}</Link>
       {!isVisible && <button onClick={() => setIsVisible(true)}>Show</button>}
-      {isVisible && <Hidden/>}
+      {isVisible && <DynamicHidden/>}
     </div>
   )
 }
