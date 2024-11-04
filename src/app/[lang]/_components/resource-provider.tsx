@@ -1,14 +1,17 @@
 'use client';
 
-import {  useSSR } from 'react-i18next';
 import { PropsWithChildren } from "react";
+import i18n from "i18next";
 
 export default function ResourceProvider({
 children,
 locale,
+  namespace,
 resources
-}: PropsWithChildren & {locale: string, resources: any}) {
-  useSSR(resources, locale);
+}: PropsWithChildren & {locale: string, namespace: string, resources: any}) {
+  if (!i18n.hasLoadedNamespace(namespace)) {
+    i18n.addResources(locale, namespace, resources);
+  }
 
   return children;
 }

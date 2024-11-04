@@ -5,8 +5,8 @@ import { languages } from "@/i18n/settings";
 import { Providers } from "@/app/[lang]/_components/providers";
 import i18n from "@/i18n";
 import TranslationProvider from "./_components/translation-provider";
-import ResourceProvider from "./_components/resource-provider";
 import { Badge } from "@/app/[lang]/_components/badge";
+import NamespaceProvider from "@/app/[lang]/_components/namespace-provider";
 
 export default async function LocaleLayout({ children, params: { lang } }: PropsWithChildren & {
   params: { lang: string }
@@ -16,19 +16,19 @@ export default async function LocaleLayout({ children, params: { lang } }: Props
     notFound();
   }
 
+  // TODO - is this the right moment?
   await i18n.changeLanguage(lang);
-  await i18n.loadNamespaces(['common']);
 
   return (
     <Providers>
       <TranslationProvider>
-        <ResourceProvider locale={i18n.language} resources={i18n.store.data}>
+        <NamespaceProvider namespace="common">
           <div>
             {i18n.t('commonTranslation', { ns: 'common' })}
             <Badge/>
             {children}
           </div>
-        </ResourceProvider>
+        </NamespaceProvider>
       </TranslationProvider>
     </Providers>
   )
