@@ -14,8 +14,6 @@ export default function TradePage() {
   const {t} = useTranslation('trade')
   const [isVisible, setIsVisible] = useState(false)
 
-  console.log()
-
   return (
     <div>
       <h1>{t('title')}</h1>
